@@ -1,0 +1,10 @@
+else {
+// return connection
+return $db;
+// $channel_name = $_GET['channels'];
+/* $sql = "SELECT * FROM songs";
+$results = $db->query($sql);
+while ($row = $results->fetchArray(SQLITE3_ASSOC)) {
+print_r($row);
+} */
+}
