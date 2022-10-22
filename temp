@@ -8,3 +8,4 @@ while ($row = $results->fetchArray(SQLITE3_ASSOC)) {
 print_r($row);
 } */
 }
+http://localhost/work/spoty/songs/Browse/searchResultsPage.php?title=vbg&artist=sfg&genre=sf&search=sf&search=sf&submit-search=
