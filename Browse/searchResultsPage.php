@@ -4,7 +4,6 @@ session_start();
 
 // fav song
 $_SESSION['favourites'] = [];
-$_SESSION['favourites'][] = ['song1', 'artist1', 'genre1', 'year1', 'popularity1'];
 ?>
 
 <!DOCTYPE html>
@@ -77,6 +76,40 @@ $_SESSION['favourites'][] = ['song1', 'artist1', 'genre1', 'year1', 'popularity1
                     echo '<h3>No results found</h3>';
                 } */
             }
+            // add to favourites
+            if (isset($_POST['addFav'])) {
+                $id = $_POST['songId'];
+                // echo $id;
+                $sql = "SELECT * FROM songs WHERE song_id = $id";
+                $results = $db->query($sql);
+                $row = $results->fetchArray(SQLITE3_ASSOC);
+                $title = $row['title'];
+                $artistId = $row['artist_id'];
+                $sql1 = "SELECT * FROM artists WHERE artist_id = $artistId";
+                $results1 = $db->query($sql1);
+                $row1 = $results1->fetchArray(SQLITE3_ASSOC);
+                $artistName = $row1['artist_name'];
+                $year = $row['year'];
+                $popularity = $row['popularity'];
+                $genreId = $row['genre_id'];
+                $sql2 = "SELECT * FROM genres WHERE genre_id = $genreId";
+                $results2 = $db->query($sql2);
+                $row2 = $results2->fetchArray(SQLITE3_ASSOC);
+                $genreName = $row2['genre_name'];
+                $sd = [
+                    'songId' => $id,
+                    'title' => $title,
+                    'artistName' => $artistName,
+                    'year' => $year,
+                    'popularity' => $popularity,
+                    'genreName' => $genreName
+                ];
+                $_SESSION['favourites'] = $sd;
+                // redirect to favourites page
+                // $url = $_SERVER['DOCUMENT_ROOT'] . 'favourites.php';
+                // header("Location: $url");
+                header("Location: ../favourites.php");
+            }
             ?>
             <div class="">
                 <table>
@@ -114,7 +147,12 @@ $_SESSION['favourites'][] = ['song1', 'artist1', 'genre1', 'year1', 'popularity1
                         <td>' . $row['year'] . '</td>
                         <td>' . $genreName . '</td>
                         <td>' . $row['popularity'] . '</td>
-                        <td><a href="song.php" class="button">Add</a></td>
+                        <td>
+                        <form action="" method="post">
+                        <input type="hidden" name="songId" value="' . $row['song_id'] . '">
+                        <button type="submit" name="addFav" class="button">Add</button>
+                        </form>
+                        </td>
                         <td><a href="song.php?songId=' . $row['song_id'] . '" class="button">View</a></td>
                     </tr>
                         ';

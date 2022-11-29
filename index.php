@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>COMP 3512 Assign1.</title>
     <!-- link css file -->
-    <link rel="stylesheet" href="resources/index.css">
+    <link rel="stylesheet" href="resources/index.css?v=<?php echo rand(); ?>s">
 </head>
 
 <body>
@@ -127,6 +127,55 @@
             while ($row5 = $results5->fetchArray(SQLITE3_ASSOC)) {
                 echo '
                 <li><a href="Browse/song.php?songId=' . $row5['song_id'] . '">' . $row5['title'] . '</a></li>
+                ';
+            }
+            echo '</ol>
+                    </div>
+                </div>';
+
+            // <!-- at the club songs ----------------------------------------------->
+            echo '<div class="card">
+                    <h3>At the club songs </h3>
+                    <div class="list">
+                        <ol>
+                ';
+            $sql6 = "SELECT song_id, title, (danceability*1.6 + energy*1.4) AS club FROM songs WHERE danceability > 0.8 ORDER BY club DESC LIMIT 10";
+            $results6 = $db->query($sql6);
+            while ($row6 = $results6->fetchArray(SQLITE3_ASSOC)) {
+                echo '
+                <li><a href="Browse/song.php?songId=' . $row6['song_id'] . '">' . $row6['title'] . '</a></li>
+                ';
+            }
+            echo '</ol>
+                    </div>
+                </div>';
+            // <!-- running songs ----------------------------------------------->
+            echo '<div class="card">
+                    <h3>Running songs </h3>
+                    <div class="list">
+                        <ol>
+                ';
+            $sql7 = "SELECT song_id, title, (energy*1.3 + valence*1.6) AS run FROM songs WHERE bpm BETWEEN 120 AND 125 ORDER BY run DESC LIMIT 10";
+            $results7 = $db->query($sql7);
+            while ($row7 = $results7->fetchArray(SQLITE3_ASSOC)) {
+                echo '
+                <li><a href="Browse/song.php?songId=' . $row7['song_id'] . '">' . $row7['title'] . '</a></li>
+                ';
+            }
+            echo '</ol>
+                    </div>
+                </div>';
+            // <!-- studying songs ----------------------------------------------->
+            echo '<div class="card">
+                    <h3>Studying songs </h3>
+                    <div class="list">
+                        <ol>
+                ';
+            $sql8 = "SELECT song_id, title, (acousticness*0.8)+(100-speechiness)+(100-valence) AS study FROM songs WHERE bpm BETWEEN 100 AND 115 AND speechiness BETWEEN 1 AND 20 ORDER BY study DESC LIMIT 10";
+            $results8 = $db->query($sql8);
+            while ($row8 = $results8->fetchArray(SQLITE3_ASSOC)) {
+                echo '
+                <li><a href="Browse/song.php?songId=' . $row8['song_id'] . '">' . $row8['title'] . '</a></li>
                 ';
             }
             echo '</ol>

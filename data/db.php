@@ -1,12 +1,7 @@
 <?php
-class MyDB extends SQLite3
-{
-    function __construct()
-    {
-        $this->open('data/music.db');
-    }
-}
-$db = new MyDB();
+// connect to the database using the PDO object
+$db = new SQLite3('data/music.db');
+// check if connection was successful
 if (!$db) {
-    echo $db->lastErrorMsg();
+    die('Connection failed: ' . $db->lastErrorMsg());
 }

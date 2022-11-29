@@ -1,11 +1,17 @@
-else {
-// return connection
-return $db;
-// $channel_name = $_GET['channels'];
-/* $sql = "SELECT * FROM songs";
-$results = $db->query($sql);
-while ($row = $results->fetchArray(SQLITE3_ASSOC)) {
-print_r($row);
-} */
-}
-http://localhost/work/spoty/songs/Browse/searchResultsPage.php?title=vbg&artist=sfg&genre=sf&search=sf&search=sf&submit-search=
+// <!-- Running songs ----------------------------------------------->
+            echo '<div class="card">
+                    <h3>Running songs</h3>
+                    <div class="list">
+                        <ol>
+                ';
+            $sql6 = "SELECT song_id, title, duration FROM songs WHERE popularity > 70 AND energy > 0.8 AND danceability > 0.8 LIMIT 10";
+            $results6 = $db->query($sql6);
+            while ($row6 = $results6->fetchArray(SQLITE3_ASSOC)) {
+                echo '
+                <li><a href="Browse/song.php?songId=' . $row6['song_id'] . '">' . $row6['title'] . '</a></li>
+                ';
+            }
+            echo '</ol>
+                    </div>
+                </div>';
+            ?>

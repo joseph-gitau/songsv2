@@ -33,27 +33,29 @@ session_start();
                     <th>View</th>
                 </tr>
                 <?php
+                // print_r($_SESSION['favourites']);
                 // check if session is set
-                if (isset($_SESSION['favourites'])) {
+                if (isset($_SESSION['favourites']) && !empty($_SESSION['favourites'])) {
                     // if session is set, loop through the array and display the song information
                     // cant set sessions with being limited not to use js :( just test data
-                    foreach ($_SESSION['favourites'] as $song) {
-                        echo '
+                    // foreach ($_SESSION['favourites'] as $song) {
+                    echo '
                         <tr>
-                        <td>' . $song[0] . '</td>
-                        <td>' . $song[1] . '</td>
-                        <td>' . $song[2] . '</td>
-                        <td>' . $song[3] . '</td>
-                        <td>' . $song[4] . '</td>
-                        <td><a href="song.php" class="button">Remove</a></td>
-                        <td><a href="song.php?songId=' . $song[4] . '" class="button">View</a></td>
+                            <td>' . $_SESSION['favourites']['title'] . '</td>
+                            <td>' . $_SESSION['favourites']['artistName'] . '</td>
+                            <td>' . $_SESSION['favourites']['year'] . '</td>
+                            <td>' . $_SESSION['favourites']['genreName'] . '</td>
+                            <td>' . $_SESSION['favourites']['popularity'] . '</td>
+                            <td><a href="favourites.php?remove=' . $_SESSION['favourites']['songId'] . '">Remove</a></td>
+                            <td><a href="Browse/song.php?songId=' . $_SESSION['favourites']['songId'] . '">View</a></td>
+                        
                     </tr>
                         
                     
                     
                 </table>
             </div>';
-                    }
+                    // }
                 } else {
                     // if session is not set, display a message
                     echo "<h1>You have no favourites yet!</h1>";
